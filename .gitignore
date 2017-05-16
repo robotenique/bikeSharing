@@ -5,19 +5,17 @@
 #   git config --global core.excludesfile '~/.gitignore_global'
 
 # Ignore bundler config.
-/.bundle
+BikeSharing/.bundle
 
 # Ignore the default SQLite database.
-/db/*.sqlite3
-/db/*.sqlite3-journal
+BikeSharing/db/*.sqlite3
+BikeSharing/db/*.sqlite3-journal
 
 # Ignore all logfiles and tempfiles.
-/log/*
-/tmp/*
-!/log/.keep
-!/tmp/.keep
+BikeSharing/log/*
+BikeSharing/tmp/*
 
-/node_modules
-/yarn-error.log
+BikeSharing/node_modules
+BikeSharing/yarn-error.log
 
-.byebug_history
+BikeSharing/.byebug_history
