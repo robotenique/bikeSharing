@@ -1,0 +1,41 @@
+<%= form_with(model: open_time, local: true) do |form| %>
+  <% if open_time.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(open_time.errors.count, "error") %> prohibited this open_time from being saved:</h2>
+
+      <ul>
+      <% open_time.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= form.label :open %>
+    <%= form.time_select :open, id: :open_time_open %>
+  </div>
+
+  <div class="field">
+    <%= form.label :close %>
+    <%= form.time_select :close, id: :open_time_close %>
+  </div>
+
+
+
+  <div class="field">
+    <%= form.label :dow %>
+    <!--<%= form.number_field :dow, id: :open_time_dow %>-->
+
+    <%= select("open_time", "dow", OpenTime.allowedDow.collect {|day| [day]} , {prompt: 'Day of week'})  %>
+  </div>
+
+  <div class="field">
+    <%= form.label :station_id %>
+    <%= form.number_field :station_id, id: :open_time_station_id %>
+  </div>
+
+  <div class="actions">
+    <%= form.submit %>
+  </div>
+<% end %>

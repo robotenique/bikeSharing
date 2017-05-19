@@ -182,6 +182,7 @@
     <orderEntry type="library" scope="PROVIDED" name="rails-dom-testing (v2.0.3, ruby-2.4.0-p0) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="rails-html-sanitizer (v1.0.3, ruby-2.4.0-p0) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="railties (v5.1.1, ruby-2.4.0-p0) [gem]" level="application" />
+    <orderEntry type="library" scope="PROVIDED" name="rake (v12.0.0, ruby-2.4.0-p0) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="rb-fsevent (v0.9.8, ruby-2.4.0-p0) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="rb-inotify (v0.9.8, ruby-2.4.0-p0) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="responders (v2.4.0, ruby-2.4.0-p0) [gem]" level="application" />

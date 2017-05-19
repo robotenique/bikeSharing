@@ -10,7 +10,33 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170518005823) do
+ActiveRecord::Schema.define(version: 20170519180951) do
+
+  create_table "open_times", force: :cascade do |t|
+    t.time "open"
+    t.time "close"
+    t.string "dow"
+    t.integer "station_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["station_id"], name: "index_open_times_on_station_id"
+  end
+
+  create_table "positions", force: :cascade do |t|
+    t.float "lat"
+    t.float "long"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "stations", force: :cascade do |t|
+    t.string "name"
+    t.integer "free_slots"
+    t.integer "free_bikes"
+    t.string "company"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
 
   create_table "users", force: :cascade do |t|
     t.string "email", default: "", null: false

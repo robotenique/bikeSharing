@@ -1,4 +1,7 @@
 Rails.application.routes.draw do
+  resources :open_times
+  resources :positions
+  resources :stations
   get 'api/index'
 
   devise_for :users
