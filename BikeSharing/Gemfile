@@ -60,3 +60,4 @@ gem 'devise-bootstrapped'
 #GoogleMaps integration
 gem 'geocoder'
 gem 'gmaps4rails'
+gem 'underscore-rails'
