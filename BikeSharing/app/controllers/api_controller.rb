@@ -1,6 +1,6 @@
 class ApiController < ApplicationController
+  layout 'map', :only => [ :index, :show ]
   def index
-      @location = {:lat => -23.5505, :lon => -46.6333}.to_json
   end
 
 end
