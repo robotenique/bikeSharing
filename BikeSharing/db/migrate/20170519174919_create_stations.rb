@@ -1,5 +1,5 @@
 class CreateStations < ActiveRecord::Migration[5.1]
-  def up
+  def change
     create_table :stations do |t|
       t.string :name
       t.integer :free_slots
@@ -8,8 +8,5 @@ class CreateStations < ActiveRecord::Migration[5.1]
 
       t.timestamps
     end
-  end
-  def down
-    drop_table :stations
   end
 end
