@@ -17,14 +17,13 @@
 
   <tbody>
     <% @stations.each do |station| %>
-    <% p = Position.find(station.position_id) %>
       <tr>
         <td><%= station.name %></td>
         <td><%= station.free_slots %></td>
         <td><%= station.free_bikes %></td>
         <td><%= station.company %></td>
-        <td><%= p.lat %></td>
-        <td><%= p.long %></td>
+        <td><%= station.position.lat %></td>
+        <td><%= station.position.long %></td>
         <td><%= link_to 'Show', station %></td>
         <td><%= link_to 'Edit', edit_station_path(station) %></td>
         <td><%= link_to 'Destroy', station, method: :delete, data: { confirm: 'Are you sure?' } %></td>

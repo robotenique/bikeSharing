@@ -19,10 +19,8 @@ class StationsController < ApplicationController
 
   # GET /stations/1/edit
   def edit
-    @latitude  = Position.find(@station.position_id).lat
-    @longitude = Position.find(@station.position_id).long
-    @station.latitude  = Position.find(@station.position_id).lat
-    @station.longitude = Position.find(@station.position_id).long
+    @station.latitude  = @station.position.lat
+    @station.longitude = @station.position.long
   end
 
   # POST /stations
@@ -33,9 +31,8 @@ class StationsController < ApplicationController
     p = Position.new
     p.lat = Float(@station.latitude)
     p.long = Float(@station.longitude)
-    p.save!
 
-    @station.position_id = p.id
+    @station.position = p
 
     respond_to do |format|
       if @station.save
@@ -52,9 +49,13 @@ class StationsController < ApplicationController
   # PATCH/PUT /stations/1.json
   def update
     respond_to do |format|
+      p = Position.new
+      p.lat = @station.latitude
+      p.long = @station.longitude
       if @station.update(station_params)
-        p = Position.find(@station.position_id)
+        p = Position.find(@station.position.id)
         p.update_attributes(lat: @station.latitude, long: @station.longitude)
+
 
         format.html { redirect_to @station, notice: 'Station was successfully updated.' }
         format.json { render :show, status: :ok, location: @station }

@@ -4,6 +4,7 @@ class CreatePositions < ActiveRecord::Migration[5.1]
       t.float :lat
       t.float :long
 
+      t.references :imageable, polymorphic: true, index: true
       t.timestamps
     end
   end

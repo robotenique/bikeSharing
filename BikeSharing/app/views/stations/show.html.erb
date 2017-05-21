@@ -22,11 +22,12 @@
 
 <p>
   <strong>Latitude:</strong>
-  <%= Position.find(@station.position_id).lat %>
+  <%= @station.position.lat %>
 </p>
+
 <p>
   <strong>Longitude:</strong>
-  <%= Position.find(@station.position_id).long %>
+  <%= @station.position.long %>
 </p>
 
 <%= link_to 'Edit', edit_station_path(@station) %> |
