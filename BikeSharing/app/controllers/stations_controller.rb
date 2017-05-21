@@ -69,7 +69,6 @@ class StationsController < ApplicationController
   # DELETE /stations/1
   # DELETE /stations/1.json
   def destroy
-    Position.find(@station.id).destroy!
     @station.destroy
     respond_to do |format|
       format.html { redirect_to stations_url, notice: 'Station was successfully destroyed.' }
