@@ -26,6 +26,13 @@ class StationsController < ApplicationController
   def create
     @station = Station.new(station_params)
 
+    p = Position.new
+    p.lat = Float(@station.latitude)
+    p.long = Float(@station.longitude)
+    p.save!
+
+    @station.position_id = p.id
+
     respond_to do |format|
       if @station.save
         format.html { redirect_to @station, notice: 'Station was successfully created.' }
@@ -69,6 +76,6 @@ class StationsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def station_params
-      params.require(:station).permit(:name, :free_slots, :free_bikes, :company)
+      params.require(:station).permit(:name, :free_slots, :free_bikes, :company, :latitude, :longitude)
     end
 end

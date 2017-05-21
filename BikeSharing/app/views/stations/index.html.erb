@@ -9,17 +9,22 @@
       <th>Free slots</th>
       <th>Free bikes</th>
       <th>Company</th>
-      <th colspan="3"></th>
+      <th>Latitude</th>
+      <th>Longitude</th>
+      <th colspan="5"></th>
     </tr>
   </thead>
 
   <tbody>
     <% @stations.each do |station| %>
+    <% p = Position.find(station.position_id) %>
       <tr>
         <td><%= station.name %></td>
         <td><%= station.free_slots %></td>
         <td><%= station.free_bikes %></td>
         <td><%= station.company %></td>
+        <td><%= p.lat %></td>
+        <td><%= p.long %></td>
         <td><%= link_to 'Show', station %></td>
         <td><%= link_to 'Edit', edit_station_path(station) %></td>
         <td><%= link_to 'Destroy', station, method: :delete, data: { confirm: 'Are you sure?' } %></td>

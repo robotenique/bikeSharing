@@ -1,4 +1,4 @@
-<%= form_with(model: station, local: true) do |form| %>
+<%= form_with(model: station, local: true) do |formStation| %>
   <% if station.errors.any? %>
     <div id="error_explanation">
       <h2><%= pluralize(station.errors.count, "error") %> prohibited this station from being saved:</h2>
@@ -12,26 +12,37 @@
   <% end %>
 
   <div class="field">
-    <%= form.label :name %>
-    <%= form.text_field :name, id: :station_name %>
+    <%= formStation.label :name %>
+    <%= formStation.text_field :name, id: :station_name %>
   </div>
 
   <div class="field">
-    <%= form.label :free_slots %>
-    <%= form.number_field :free_slots, id: :station_free_slots %>
+    <%= formStation.label :free_slots %>
+    <%= formStation.number_field :free_slots, id: :station_free_slots %>
   </div>
 
   <div class="field">
-    <%= form.label :free_bikes %>
-    <%= form.number_field :free_bikes, id: :station_free_bikes %>
+    <%= formStation.label :free_bikes %>
+    <%= formStation.number_field :free_bikes, id: :station_free_bikes %>
   </div>
 
   <div class="field">
-    <%= form.label :company %>
-    <%= form.text_field :company, id: :station_company %>
+    <%= formStation.label :company %>
+    <%= formStation.text_field :company, id: :station_company %>
   </div>
+
+    <div class="field">
+      <%= formStation.label :latitude %>
+      <%= formStation.number_field :latitude, id: :latitude %>
+    </div>
+
+    <div class="field">
+      <%= formStation.label :longitude %>
+      <%= formStation.text_field :longitude, id: :longitude %>
+    </div>
 
   <div class="actions">
-    <%= form.submit %>
+    <%= formStation.submit %>
   </div>
 <% end %>
+
