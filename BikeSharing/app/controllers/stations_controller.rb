@@ -19,6 +19,10 @@ class StationsController < ApplicationController
 
   # GET /stations/1/edit
   def edit
+    @latitude  = Position.find(@station.position_id).lat
+    @longitude = Position.find(@station.position_id).long
+    @station.latitude  = Position.find(@station.position_id).lat
+    @station.longitude = Position.find(@station.position_id).long
   end
 
   # POST /stations
@@ -49,6 +53,9 @@ class StationsController < ApplicationController
   def update
     respond_to do |format|
       if @station.update(station_params)
+        p = Position.find(@station.position_id)
+        p.update_attributes(lat: @station.latitude, long: @station.longitude)
+
         format.html { redirect_to @station, notice: 'Station was successfully updated.' }
         format.json { render :show, status: :ok, location: @station }
       else
