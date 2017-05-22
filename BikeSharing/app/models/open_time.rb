@@ -1,7 +1,7 @@
 class OpenTime < ApplicationRecord
   @allowed_dow = [ "bday", "holiday", "sat", "sun" ]
 
-  def self.allowedDow
+  def self.allowed_dow
     @allowed_dow
   end
 

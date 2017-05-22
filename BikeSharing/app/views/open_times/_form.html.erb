@@ -27,7 +27,7 @@
     <%= form.label :dow %>
     <!--<%= form.number_field :dow, id: :open_time_dow %>-->
 
-    <%= select("open_time", "dow", OpenTime.allowedDow.collect {|day| [day]} , {prompt: 'Day of week'})  %>
+    <%= select("open_time", "dow", OpenTime.allowed_dow.collect {|day| [day]} , {prompt: 'Day of week'})  %>
   </div>
 
   <div class="field">
