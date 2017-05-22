@@ -9,9 +9,11 @@
       <th>Free slots</th>
       <th>Free bikes</th>
       <th>Company</th>
+      <!-- Dealing with position -->
       <th>Latitude</th>
       <th>Longitude</th>
-      <th colspan="5"></th>
+      <!-- Dealt -->
+      <th colspan="5"></th> <!-- Changed from 3 to 5 (due to position vars) -->
     </tr>
   </thead>
 
@@ -22,8 +24,10 @@
         <td><%= station.free_slots %></td>
         <td><%= station.free_bikes %></td>
         <td><%= station.company %></td>
+        <!-- Dealing with position -->
         <td><%= station.position.lat %></td>
         <td><%= station.position.long %></td>
+        <!-- Dealt -->
         <td><%= link_to 'Show', station %></td>
         <td><%= link_to 'Edit', edit_station_path(station) %></td>
         <td><%= link_to 'Destroy', station, method: :delete, data: { confirm: 'Are you sure?' } %></td>

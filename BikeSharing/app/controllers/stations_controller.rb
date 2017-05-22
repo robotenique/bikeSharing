@@ -19,8 +19,10 @@ class StationsController < ApplicationController
 
   # GET /stations/1/edit
   def edit
+    # Dealing with position
     @station.latitude  = @station.position.lat
     @station.longitude = @station.position.long
+    # Dealt
   end
 
   # POST /stations
@@ -28,11 +30,12 @@ class StationsController < ApplicationController
   def create
     @station = Station.new(station_params)
 
-    p = Position.new
-    p.lat = Float(@station.latitude)
-    p.long = Float(@station.longitude)
-
-    @station.position = p
+    # Dealing with position
+    position = Position.new
+    position.lat  = @station.latitude
+    position.long = @station.longitude
+    @station.position = position
+    # Dealt
 
     respond_to do |format|
       if @station.save
@@ -49,14 +52,10 @@ class StationsController < ApplicationController
   # PATCH/PUT /stations/1.json
   def update
     respond_to do |format|
-      p = Position.new
-      p.lat = @station.latitude
-      p.long = @station.longitude
       if @station.update(station_params)
-        p = Position.find(@station.position.id)
-        p.update_attributes(lat: @station.latitude, long: @station.longitude)
-
-
+        # Dealing with position
+        @station.position.update_attributes!(lat: @station.latitude, long: @station.longitude)
+        # Dealt
         format.html { redirect_to @station, notice: 'Station was successfully updated.' }
         format.json { render :show, status: :ok, location: @station }
       else
@@ -84,6 +83,8 @@ class StationsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def station_params
+      # :latitude and :longitude have been added in order to grant access to these vars when
+      # passing through json from one view to another inside @station var
       params.require(:station).permit(:name, :free_slots, :free_bikes, :company, :latitude, :longitude)
     end
 end

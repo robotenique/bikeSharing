@@ -8,6 +8,6 @@ class CreateOpenTimes < ActiveRecord::Migration[5.1]
 
       t.timestamps
     end
-    add_index :open_times, :station_id
+    add_index :open_times, :station_id # TODO: change this
   end
 end
