@@ -5,6 +5,7 @@ handler.buildMap({ internal: {id: 'basic_map'} }, function(){
     // TODO: Change this to make an Ajax request to get the markers
     var mkList = {"lat": [], "lng": [], "img": [], "name": []};
     var length = 0;
+    // TODO: Change the API calls to RAILS controller and get using AJAX
     // Set the global configs to synchronous
     $.ajaxSetup({
         async: false
