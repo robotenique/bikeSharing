@@ -20,6 +20,7 @@ html, body, .container,  #map {
     height: 100% !important;
     margin: 0;
     padding: 0;
+    overflow: hidden !important;
 }
 
 body {
