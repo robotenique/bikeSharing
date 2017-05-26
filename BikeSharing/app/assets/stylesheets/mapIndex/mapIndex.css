@@ -15,7 +15,7 @@ margin-right: auto;
 
 }*/
 
-html, body, .container,  #map {
+html, body, .container-fluid,  #map {
     width: 100% !important;
     height: 100% !important;
     margin: 0;
