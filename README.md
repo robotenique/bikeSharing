@@ -58,7 +58,7 @@ Para ver todas as telas acesse: https://ninjamock.com/s/LQ98L
 
 Diagrama de classes:
 
-[!alt text] (https://linux.ime.usp.br/~duilioelias/CitiBikes.png)
+![alt text](https://linux.ime.usp.br/~duilioelias/CitiBikes.png)
 
 
 Para acompanhar o desenvolvimento do projeto estamos utilizando o trello:
