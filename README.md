@@ -28,6 +28,31 @@ Ao integrar as funcionalidades da captura de dados com a geolocalização, esper
 * **Vitor Santos** - [Varyag](https://gitlab.com/Varyag)
 
 
+
+## Usuário padrão
+*E-mail : teste@teste.com*
+*Senha  : 123456*
+
+## Executar o projeto
+Basta ir na pasta *bikesharingSP/BikeSharing*, executar *bundle install* pelo terminal para instalar as gems.
+Em seguida, fazer o migrate do banco de dados, e rodar com *rails s*.
+
+A lista completa das dependências pode ser vista no *.gemfile* dentro da pasta.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 Alguns prints das telas que pretendemos desenvolver:
 
 Página Inicial:
