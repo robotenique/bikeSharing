@@ -15,13 +15,14 @@ class StationsController < ApplicationController
   # GET /stations/new
   def new
     @station = Station.new
+    # @station.open_times
   end
 
   # GET /stations/1/edit
   def edit
     # Dealing with position
-    @station.latitude  = @station.position.lat
-    @station.longitude = @station.position.long
+    # @station.latitude  = @station.position.lat
+    # @station.longitude = @station.position.long
     # Dealt
   end
 
@@ -29,13 +30,6 @@ class StationsController < ApplicationController
   # POST /stations.json
   def create
     @station = Station.new(station_params)
-
-    # Dealing with position
-    position = Position.new
-    position.lat  = @station.latitude
-    position.long = @station.longitude
-    @station.position = position
-    # Dealt
 
     respond_to do |format|
       if @station.save
@@ -53,9 +47,9 @@ class StationsController < ApplicationController
   def update
     respond_to do |format|
       if @station.update(station_params)
-        # Dealing with position
-        @station.position.update_attributes!(lat: @station.latitude, long: @station.longitude)
-        # Dealt
+        # # Dealing with position
+        # @station.position.update_attributes!(lat: @station.latitude, long: @station.longitude)
+        # # Dealt
         format.html { redirect_to @station, notice: 'Station was successfully updated.' }
         format.json { render :show, status: :ok, location: @station }
       else
@@ -83,8 +77,9 @@ class StationsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def station_params
-      # :latitude and :longitude have been added in order to grant access to these vars when
-      # passing through json from one view to another inside @station var
-      params.require(:station).permit(:name, :free_slots, :free_bikes, :company, :latitude, :longitude)
+      params.require(:station).permit(
+          :name, :free_slots, :free_bikes, :company,
+          position: {},
+          open_times: {})
     end
 end

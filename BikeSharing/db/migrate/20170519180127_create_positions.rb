@@ -4,9 +4,7 @@ class CreatePositions < ActiveRecord::Migration[5.1]
       t.float :lat
       t.float :long
 
-      # This polymorphic association is intended to be used with Station and
-      # some other structures to be coded yet
-      t.references :imageable, polymorphic: true, index: true
+      t.references :station, index: true
       t.timestamps
     end
   end
