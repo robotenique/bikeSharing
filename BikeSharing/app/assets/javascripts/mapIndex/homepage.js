@@ -30,10 +30,10 @@ function initMap() {
 
 }
 
-//==================Stations builder=====================
-// Functions to build the stations from the first time!
-
-/* Get the stations from the API, then add into the map */
+/*==================Stations builder=====================
+ * Functions to build the stations from the first time!
+ */
+// Get the stations from the API, then add into the map
 function addStations(mapi){
     $.getJSON("https://api.citybik.es/v2/networks/bikesampa", function(json) {
         json = json['network']['stations'];
@@ -50,7 +50,7 @@ function addStations(mapi){
         addCicloSampa(mapi, mkList);
     });
 }
-/* Helper callback to add stations from the cicloSampa provider */
+// Helper callback to add stations from the cicloSampa provider
 function addCicloSampa(mapi, mkList) {
     $.getJSON("https://api.citybik.es/v2/networks/ciclosampa", function(json) {
         json = json['network']['stations'];
@@ -87,14 +87,14 @@ function setMarkers(mapi, mkList) {
 }
 
 //==================InfoWindow creator=====================
-/* Add a click listener to a given marker to display slot info*/
+//Add a click listener to a given marker to display slot info
 function bindInfoWindow(marker, mapi, infowindow, html) {
     google.maps.event.addListener(marker, 'click', function() {
         infowindow.setContent(html);
         infowindow.open(mapi, marker);
     });
 }
-/* Returns the formatted string for a given marker */
+// Returns the formatted string for a given marker
 function createInfo(mkList, i) {
     var bik = mkList["free"][i] != 1 ? " bikes livres" : " bike livre";
     var slot = mkList["emptyS"][i] != 1 ? " slots livres" : " slot livre";
