@@ -15,18 +15,21 @@ margin-right: auto;
 
 }*/
 
-html, body, .container-fluid,  #map {
+#basic_map img {
+  max-width: none;
+}
+#basic_map label {
+  width: auto; display:inline;
+}
+
+
+html, body, .container-fluid,  #basic_map {
     width: 100% !important;
     height: 100% !important;
     margin: 0;
     padding: 0;
     overflow: hidden !important;
 }
-
-body {
-  background-color: #f7f7f7;
-}
-
 #basic_map {
     position: relative;
     height: 96%;
@@ -34,4 +37,24 @@ body {
     overflow: hidden !important;
     line-height: 1.35;
     white-space: nowrap;
+}
+
+body {
+  background-color: #f7f7f7;
+}
+#legend {
+  font-family: Arial, sans-serif;
+  background: #fff;
+  padding: 10px;
+  margin: 10px;
+  border: 3px solid #000;
+}
+#legend div {
+    font-size: 15px;
+}
+#legend h3 {
+  margin-top: 0;
+}
+#legend img {
+  vertical-align: middle;
 }
