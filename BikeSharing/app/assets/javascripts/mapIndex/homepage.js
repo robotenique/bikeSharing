@@ -164,6 +164,7 @@ async function updLocs(mapi, userM) {
     while(true) {
         getGeoLocation();
         if (pos != ""){ // Only update the position when we have one!
+            console.log(pos.coords.latitude+", "+pos.coords.longitude);
             userM.setPosition(new google.maps.LatLng(
                               pos.coords.latitude,
                               pos.coords.longitude));
@@ -187,4 +188,17 @@ function setGeoCookie(position) {
 // This should be used when getting the user position
 function displayCurrLoc(position){
     pos = position;
+}
+
+/* THIS IS IMPORTANT! RAILS turbolinks duplicate the gmaps script insertion,
+ * breaking a lot of the functionality on page reload. THis makes sure to include
+ * the script only once, as expected!
+ */
+if(window.google){
+  initMap();
+} else{
+  $.ajax('//maps.google.com/maps/api/js?key=AIzaSyBaPMPea6wsfaG4aAfW1LCMX5CeE1rvy-0&callback=initMap', {
+    crossDomain: true,
+    dataType: 'script'
+  });
 }
