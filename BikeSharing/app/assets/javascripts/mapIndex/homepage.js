@@ -19,13 +19,11 @@ function initMap() {
     addStations(map);
 
     map.setCenter(myLatlng);
-    $(document).ready(function() {
-        // Configure the legend
-        var legend = document.getElementById('legend');
-        map.controls[google.maps.ControlPosition.RIGHT_BOTTOM].push(legend);
-        updLocs(map, userM);
-        updStations(map);
-    });
+    // Configure the legend
+    var legend = document.getElementById('legend');
+    map.controls[google.maps.ControlPosition.RIGHT_BOTTOM].push(legend);
+    updLocs(map, userM);
+    updStations(map);
 }
 
 /*==================Stations builder=====================

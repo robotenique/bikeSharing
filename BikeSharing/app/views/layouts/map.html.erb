@@ -13,7 +13,7 @@
         <%= javascript_include_tag 'mapIndex/mapIndex', media: 'all' %>
     </head>
 
-    <body data-no-turbolink="true"> <!-- Render the partial template, keep it DRY! -->
+    <body> <!-- Render the partial template, keep it DRY! -->
         <%= render '/devise/menu/navbar' %>
         <% if notice %>
             <p class="alert alert-success"><%= notice %></p>
