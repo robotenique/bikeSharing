@@ -1,33 +1,49 @@
 var stations = []; // The stations (markers) list
 var pos = "";   // the user position
 var infowindow = ""; // the infowindow to display each station info
+var lastDest = "";
 
 // Initializer callback - Automatically called by the gmaps API
 function initMap() {
+    var mapStyle = cleanMapStyle();
     var myLatlng = {lat: -23.5505, lng: -46.6333};
+    var directionsService = new google.maps.DirectionsService;
+    var directionsDisplay = new google.maps.DirectionsRenderer;
     var map = new google.maps.Map(document.getElementById('basic_map'), {
         zoom: 13,
-        center: myLatlng
+        center: myLatlng,
+        styles: mapStyle
     });
+    directionsDisplay.setMap(map);
     // the user marker needs to be always on top
     var userM = new google.maps.Marker({
         title: "Você",
         position: myLatlng,
         optimized: false,
         zIndex:99999999
- });
-    addStations(map);
+    });
+    initializeUserPos(map, userM);
+    myPosListener(map, userM);
+    userM.addListener('position_changed', function() {
+        if(lastDest != ""){
+            if(getDistance(userM, lastDest) < 200){
+                lastDest = "";
+                directionsDisplay.set('directions', null);
+                changeOpacity(undefined, 1); // Restore stations opacity
+                $("#routeFreeBike").html("<span class=\"glyphicon glyphicon-map-marker\"></span> Guardar Bike");
+            }
+        }
+    });
+    addStations(map, userM);
     map.setCenter(myLatlng);
-    updLocs(map, userM);
-    updStations(map);
     // Configure the legend
     var legend = document.getElementById('legend');
-    var div = document.createElement('div');
-    div.innerHTML = '<img src="/assets/okBike.png">   ' + "Há bikes livres <br>"+
-                    '<img src="/assets/badBike.png">   ' + "Nenhuma bike livre";
-    legend.appendChild(div);
     map.controls[google.maps.ControlPosition.RIGHT_BOTTOM].push(legend);
-
+    // Set the updaters (asynchronously updates the map)
+    updLocs(map, userM);
+    updStations(map);
+    // Listener for the freeSlots button
+    freeSlotsListener(directionsService, directionsDisplay);
 }
 
 /*==================Stations builder=====================
@@ -109,7 +125,7 @@ function createInfo(mkList, i) {
 // Update the stations from the API every 30 seconds
 async function updStations(mapi){
     while(true) {
-        mkList = getAPIinfo(mapi);
+        getAPIinfo(mapi);
         await sleep(10000);
     }
 }
@@ -148,14 +164,28 @@ function updMarkers(mkList, mapi) {
     if(stations.length > 0){
         for (var i = 0; i < stations.length; i++) {
             var m = stations[i];
-            m.setIcon(mkList["free"][i] == 0 ?  "/assets/badBike.png" : "/assets/okBike.png")
-            var content = createInfo(mkList, i);
-            bindInfoWindow(m, mapi, infowindow, content);
+            if(mkList["free"][i] != undefined) {
+                m.setIcon(mkList["free"][i] == 0 ?  "/assets/badBike.png" : "/assets/okBike.png")
+                var content = createInfo(mkList, i);
+                bindInfoWindow(m, mapi, infowindow, content);
+            }
         }
     }
 }
 
 //==================Geolocation updater=====================
+// Initializes the user position for the first time
+function initializeUserPos(mapi, userM) {
+    if (navigator.geolocation){
+        navigator.geolocation.getCurrentPosition(function(position){
+            var nPos = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
+            userM.setPosition(nPos);
+            userM.setMap(mapi);
+            mapi.setCenter(nPos);
+        });
+    }
+}
+// Sleep helper function
 function sleep(ms) {
   return new Promise(resolve => setTimeout(resolve, ms));
 }
@@ -163,11 +193,13 @@ function sleep(ms) {
 async function updLocs(mapi, userM) {
     while(true) {
         getGeoLocation();
-        if (pos != ""){ // Only update the position when we have one!
+        // Only update the position when we have one, and it has changed!
+        if (pos != "" && (userM.getPosition().lat() != pos.coords.latitude ||
+            userM.getPosition().lng() != pos.coords.longitude)){
             userM.setPosition(new google.maps.LatLng(
                               pos.coords.latitude,
                               pos.coords.longitude));
-            userM.setMap(mapi);
+            if(userM.getMap() != mapi){userM.setMap(mapi);}
         }
         await sleep(15000);
     }
@@ -187,4 +219,180 @@ function setGeoCookie(position) {
 // This should be used when getting the user position
 function displayCurrLoc(position){
     pos = position;
+}
+
+/* THIS IS IMPORTANT! RAILS turbolinks duplicate the gmaps script insertion,
+ * breaking a lot of the functionality on page reload. THis makes sure to include
+ * the script only once, as expected!
+ */
+if(window.google){
+  initMap();
+} else{
+  $.ajax('//maps.google.com/maps/api/js?key=AIzaSyBaPMPea6wsfaG4aAfW1LCMX5CeE1rvy-0&callback=initMap', {
+    crossDomain: true,
+    dataType: 'script'
+  });
+}
+
+//==================Helper functions=====================
+// Returns the user position if defined. Returns undefined if not
+function getUserPos(){
+    if (pos != ""){
+        return pos;
+    }
+    else{
+        return undefined;
+    }
+}
+/* Listener to the freeSlots button. Makes a request to the controller
+ * to get the nearest station with free slots
+ */
+function freeSlotsListener(directionsService, directionsDisplay){
+    $("#routeFreeBike").click(function(){
+        if(lastDest != "") {
+            lastDest = "";
+            directionsDisplay.set('directions', null);
+            changeOpacity(undefined, 1); // Restore stations opacity
+            $("#routeFreeBike").html("<span class=\"glyphicon glyphicon-map-marker\"></span> Guardar Bike");
+            return;
+        }
+        if(pos != undefined){
+            $.ajax({
+                url: "/api/free_slots.json",
+                data: {pos: pos},
+                dataType: "json",
+            }).done(function(response) {
+                if(response.success){
+                    destination = obtainStation(response.destStation);
+                    if(destination != undefined){
+                        calculateAndPlot(directionsService, directionsDisplay, destination);
+                        changeOpacity(destination, 0.5);
+                    }
+                    $("#routeFreeBike").html("<span class=\"glyphicon glyphicon-ban-circle\"></span> Apagar rota");
+                }
+                else{
+                    window.alert("Não há estações com slots livres! D:");
+                }
+            });
+        }
+        else{
+            window.alert("Precisamos da sua posição...");
+        }
+    });
+}
+// Send the specifications to gmaps, calculate and plot the route
+function calculateAndPlot(directionsService, directionsDisplay, end) {
+    directionsService.route({
+         origin: new google.maps.LatLng(pos.coords.latitude, pos.coords.longitude),
+         destination: end.getPosition(),
+         travelMode: 'BICYCLING'
+       }, function(response, status) {
+         if (status === 'OK') {
+           directionsDisplay.setDirections(response);
+           lastDest = end;
+         } else {
+           window.alert('Houve falha no cálculo da rota devido a ' + status);
+         }
+       });
+}
+// Get the station instance in the map (a marker) which name is mySt
+function obtainStation(mySt){
+    if(stations.length > 0){
+        for (st of stations) {
+            if(mySt == st.getTitle()){
+                return st;
+            }
+        }
+        return undefined;
+    }
+}
+// Get the distance between source and destination
+function getDistance(source, destination) {
+    s = source.getPosition()
+    d = destination.getPosition()
+  return google.maps.geometry.spherical.computeDistanceBetween(
+    new google.maps.LatLng(s.lat(), s.lng()),
+    new google.maps.LatLng(d.lat(), d.lng())
+  );
+}
+// Return the style of the map used
+function cleanMapStyle() {
+    return [
+  {
+    "featureType": "administrative.land_parcel",
+    "elementType": "labels",
+    "stylers": [
+      {
+        "visibility": "off"
+      }
+    ]
+  },
+  {
+    "featureType": "poi",
+    "elementType": "labels.text",
+    "stylers": [
+      {
+        "visibility": "off"
+      }
+    ]
+  },
+  {
+    "featureType": "poi.business",
+    "stylers": [
+      {
+        "visibility": "off"
+      }
+    ]
+  },
+  {
+    "featureType": "road",
+    "elementType": "labels.icon",
+    "stylers": [
+      {
+        "visibility": "off"
+      }
+    ]
+  },
+  {
+    "featureType": "road.local",
+    "elementType": "labels",
+    "stylers": [
+      {
+        "visibility": "off"
+      }
+    ]
+  },
+  {
+    "featureType": "transit",
+    "stylers": [
+      {
+        "visibility": "off"
+      }
+    ]
+  }
+];
+}
+// Change the opacity of every station but the "thisStation". if undefined, change everything
+function changeOpacity(thisStation, opc) {
+    if(thisStation == undefined){thisName = "";}
+    else{thisName = thisStation.getTitle();}
+    for (var i = 0; i < stations.length; i++) {
+        var m = stations[i];
+        if(m.getTitle() != thisName) {
+            m.setOpacity(opc);
+        }
+    }
+}
+// Listener to the 'myPosition' button
+function myPosListener(mapi, userM){
+    $("#myPosition").click(function(){
+        if (navigator.geolocation){
+            navigator.geolocation.getCurrentPosition(function(position){
+                var nPos = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
+                userM.setPosition(nPos);
+                if(userM.getMap() != mapi) {userM.setMap(mapi);}
+                mapi.setCenter(nPos);
+            });
+        }
+    });
 }
