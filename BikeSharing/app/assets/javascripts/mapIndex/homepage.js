@@ -1,14 +1,19 @@
 var stations = []; // The stations (markers) list
 var pos = "";   // the user position
 var infowindow = ""; // the infowindow to display each station info
+var lastDest = "";
 
 // Initializer callback - Automatically called by the gmaps API
 function initMap() {
+    var mapStyle = cleanMapStyle();
     var myLatlng = {lat: -23.5505, lng: -46.6333};
+    var directionsService = new google.maps.DirectionsService;
+    var directionsDisplay = new google.maps.DirectionsRenderer;
     var map = new google.maps.Map(document.getElementById('basic_map'), {
         zoom: 13,
         center: myLatlng
     });
+    directionsDisplay.setMap(map);
     // the user marker needs to be always on top
     var userM = new google.maps.Marker({
         title: "Você",
@@ -16,14 +21,25 @@ function initMap() {
         optimized: false,
         zIndex:99999999
  });
+    userM.addListener('position_changed', function() {
+        if(lastDest != ""){
+            if(getDistance(userM, lastDest) < 200){
+                lastDest = "";
+                directionsDisplay.set('directions', null);
+                $("#routeFreeBike").text("Guardar Bike");
+            }
+        }
+    });
     addStations(map);
-
     map.setCenter(myLatlng);
     // Configure the legend
     var legend = document.getElementById('legend');
     map.controls[google.maps.ControlPosition.RIGHT_BOTTOM].push(legend);
+    // Set the updaters (asynchronously updates the map)
     updLocs(map, userM);
     updStations(map);
+    // Listener for the freeSlots button
+    freeSlotsListener(directionsService, directionsDisplay);
 }
 
 /*==================Stations builder=====================
@@ -161,11 +177,13 @@ function sleep(ms) {
 async function updLocs(mapi, userM) {
     while(true) {
         getGeoLocation();
-        if (pos != ""){ // Only update the position when we have one!
+        // Only update the position when we have one, and it has changed!
+        if (pos != "" && (userM.getPosition().lat() != pos.coords.latitude ||
+            userM.getPosition().lng() != pos.coords.longitude)){
             userM.setPosition(new google.maps.LatLng(
                               pos.coords.latitude,
                               pos.coords.longitude));
-            userM.setMap(mapi);
+            if(userM.getMap() != mapi){userM.setMap(mapi);}
         }
         await sleep(15000);
     }
@@ -198,4 +216,139 @@ if(window.google){
     crossDomain: true,
     dataType: 'script'
   });
+}
+
+//==================Helper functions=====================
+function getUserPos(){
+    if (pos != ""){
+        return pos;
+    }
+    else{
+        return undefined;
+    }
+}
+
+function freeSlotsListener(directionsService, directionsDisplay){
+    $("#routeFreeBike").click(function(){
+        if(lastDest != "") {
+            lastDest = "";
+            directionsDisplay.set('directions', null);
+            $("#routeFreeBike").text("Guardar Bike");
+            return;
+        }
+        if(pos != undefined){
+            $.ajax({
+                url: "/api/free_slots.json",
+                data: {pos: pos},
+                dataType: "json",
+            }).done(function(response) {
+                console.log(response);
+                if(response.success){
+                    destination = obtainStation(response.destStation);
+                    if(destination != undefined){
+                        calculateAndPlot(directionsService, directionsDisplay, destination);
+                    }
+                    $("#routeFreeBike").text("Apagar rota");
+                }
+                else{
+                    window.alert("Não há estações com slots livres! D:");
+                }
+            });
+        }
+        else{
+            window.alert("Precisamos da sua posição...");
+        }
+    });
+}
+
+function calculateAndPlot(directionsService, directionsDisplay, end) {
+    directionsService.route({
+         origin: new google.maps.LatLng(pos.coords.latitude, pos.coords.longitude),
+         destination: end.getPosition(),
+         travelMode: 'BICYCLING'
+       }, function(response, status) {
+         if (status === 'OK') {
+           directionsDisplay.setDirections(response);
+           lastDest = end;
+         } else {
+           window.alert('Houve falha no cálculo da rota devido a ' + status);
+         }
+       });
+}
+
+function obtainStation(mySt){
+    if(stations.length > 0){
+        for (st of stations) {
+            if(mySt == st.getTitle()){
+                return st;
+            }
+        }
+        return undefined;
+    }
+}
+
+function getDistance(source, destination) {
+    s = source.getPosition()
+    d = destination.getPosition()
+  return google.maps.geometry.spherical.computeDistanceBetween(
+    new google.maps.LatLng(s.lat(), s.lng()),
+    new google.maps.LatLng(d.lat(), d.lng())
+  );
+}
+
+function cleanMapStyle() {
+    return [
+  {
+    "featureType": "administrative.land_parcel",
+    "elementType": "labels",
+    "stylers": [
+      {
+        "visibility": "off"
+      }
+    ]
+  },
+  {
+    "featureType": "poi",
+    "elementType": "labels.text",
+    "stylers": [
+      {
+        "visibility": "off"
+      }
+    ]
+  },
+  {
+    "featureType": "poi.business",
+    "stylers": [
+      {
+        "visibility": "off"
+      }
+    ]
+  },
+  {
+    "featureType": "road",
+    "elementType": "labels.icon",
+    "stylers": [
+      {
+        "visibility": "off"
+      }
+    ]
+  },
+  {
+    "featureType": "road.local",
+    "elementType": "labels",
+    "stylers": [
+      {
+        "visibility": "off"
+      }
+    ]
+  },
+  {
+    "featureType": "transit",
+    "stylers": [
+      {
+        "visibility": "off"
+      }
+    ]
+  }
+];
 }
