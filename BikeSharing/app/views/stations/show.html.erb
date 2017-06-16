@@ -1,0 +1,34 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Company:</strong>
+  <%= @station.company %>
+</p>
+
+<p>
+  <strong>Free bikes:</strong>
+  <%= @station.free_bikes %>
+</p>
+
+<p>
+  <strong>Free slots:</strong>
+  <%= @station.free_slots %>
+</p>
+
+<p>
+  <strong>Name:</strong>
+  <%= @station.name %>
+</p>
+
+<p>
+  <strong>Lat:</strong>
+  <%= @station.lat %>
+</p>
+
+<p>
+  <strong>Long:</strong>
+  <%= @station.long %>
+</p>
+
+<%= link_to 'Edit', edit_station_path(@station) %> |
+<%= link_to 'Back', stations_path %>

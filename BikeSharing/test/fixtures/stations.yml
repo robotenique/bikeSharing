@@ -1,0 +1,17 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  company: MyString
+  free_bikes: 1
+  free_slots: 1
+  name: MyString
+  lat: 1.5
+  long: 1.5
+
+two:
+  company: MyString
+  free_bikes: 1
+  free_slots: 1
+  name: MyString
+  lat: 1.5
+  long: 1.5
