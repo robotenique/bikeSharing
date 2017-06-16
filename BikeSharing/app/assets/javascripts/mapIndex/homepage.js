@@ -11,7 +11,8 @@ function initMap() {
     var directionsDisplay = new google.maps.DirectionsRenderer;
     var map = new google.maps.Map(document.getElementById('basic_map'), {
         zoom: 13,
-        center: myLatlng
+        center: myLatlng,
+        styles: mapStyle
     });
     directionsDisplay.setMap(map);
     // the user marker needs to be always on top
@@ -20,17 +21,20 @@ function initMap() {
         position: myLatlng,
         optimized: false,
         zIndex:99999999
- });
+    });
+    initializeUserPos(map, userM);
+    myPosListener(map, userM);
     userM.addListener('position_changed', function() {
         if(lastDest != ""){
             if(getDistance(userM, lastDest) < 200){
                 lastDest = "";
                 directionsDisplay.set('directions', null);
-                $("#routeFreeBike").text("Guardar Bike");
+                changeOpacity(undefined, 1); // Restore stations opacity
+                $("#routeFreeBike").html("<span class=\"glyphicon glyphicon-map-marker\"></span> Guardar Bike");
             }
         }
     });
-    addStations(map);
+    addStations(map, userM);
     map.setCenter(myLatlng);
     // Configure the legend
     var legend = document.getElementById('legend');
@@ -170,6 +174,18 @@ function updMarkers(mkList, mapi) {
 }
 
 //==================Geolocation updater=====================
+// Initializes the user position for the first time
+function initializeUserPos(mapi, userM) {
+    if (navigator.geolocation){
+        navigator.geolocation.getCurrentPosition(function(position){
+            var nPos = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
+            userM.setPosition(nPos);
+            userM.setMap(mapi);
+            mapi.setCenter(nPos);
+        });
+    }
+}
+// Sleep helper function
 function sleep(ms) {
   return new Promise(resolve => setTimeout(resolve, ms));
 }
@@ -219,6 +235,7 @@ if(window.google){
 }
 
 //==================Helper functions=====================
+// Returns the user position if defined. Returns undefined if not
 function getUserPos(){
     if (pos != ""){
         return pos;
@@ -227,13 +244,16 @@ function getUserPos(){
         return undefined;
     }
 }
-
+/* Listener to the freeSlots button. Makes a request to the controller
+ * to get the nearest station with free slots
+ */
 function freeSlotsListener(directionsService, directionsDisplay){
     $("#routeFreeBike").click(function(){
         if(lastDest != "") {
             lastDest = "";
             directionsDisplay.set('directions', null);
-            $("#routeFreeBike").text("Guardar Bike");
+            changeOpacity(undefined, 1); // Restore stations opacity
+            $("#routeFreeBike").html("<span class=\"glyphicon glyphicon-map-marker\"></span> Guardar Bike");
             return;
         }
         if(pos != undefined){
@@ -242,13 +262,13 @@ function freeSlotsListener(directionsService, directionsDisplay){
                 data: {pos: pos},
                 dataType: "json",
             }).done(function(response) {
-                console.log(response);
                 if(response.success){
                     destination = obtainStation(response.destStation);
                     if(destination != undefined){
                         calculateAndPlot(directionsService, directionsDisplay, destination);
+                        changeOpacity(destination, 0.5);
                     }
-                    $("#routeFreeBike").text("Apagar rota");
+                    $("#routeFreeBike").html("<span class=\"glyphicon glyphicon-ban-circle\"></span> Apagar rota");
                 }
                 else{
                     window.alert("Não há estações com slots livres! D:");
@@ -260,7 +280,7 @@ function freeSlotsListener(directionsService, directionsDisplay){
         }
     });
 }
-
+// Send the specifications to gmaps, calculate and plot the route
 function calculateAndPlot(directionsService, directionsDisplay, end) {
     directionsService.route({
          origin: new google.maps.LatLng(pos.coords.latitude, pos.coords.longitude),
@@ -275,7 +295,7 @@ function calculateAndPlot(directionsService, directionsDisplay, end) {
          }
        });
 }
-
+// Get the station instance in the map (a marker) which name is mySt
 function obtainStation(mySt){
     if(stations.length > 0){
         for (st of stations) {
@@ -286,7 +306,7 @@ function obtainStation(mySt){
         return undefined;
     }
 }
-
+// Get the distance between source and destination
 function getDistance(source, destination) {
     s = source.getPosition()
     d = destination.getPosition()
@@ -295,7 +315,7 @@ function getDistance(source, destination) {
     new google.maps.LatLng(d.lat(), d.lng())
   );
 }
-
+// Return the style of the map used
 function cleanMapStyle() {
     return [
   {
@@ -351,4 +371,28 @@ function cleanMapStyle() {
     ]
   }
 ];
+}
+// Change the opacity of every station but the "thisStation". if undefined, change everything
+function changeOpacity(thisStation, opc) {
+    if(thisStation == undefined){thisName = "";}
+    else{thisName = thisStation.getTitle();}
+    for (var i = 0; i < stations.length; i++) {
+        var m = stations[i];
+        if(m.getTitle() != thisName) {
+            m.setOpacity(opc);
+        }
+    }
+}
+// Listener to the 'myPosition' button
+function myPosListener(mapi, userM){
+    $("#myPosition").click(function(){
+        if (navigator.geolocation){
+            navigator.geolocation.getCurrentPosition(function(position){
+                var nPos = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
+                userM.setPosition(nPos);
+                if(userM.getMap() != mapi) {userM.setMap(mapi);}
+                mapi.setCenter(nPos);
+            });
+        }
+    });
 }
