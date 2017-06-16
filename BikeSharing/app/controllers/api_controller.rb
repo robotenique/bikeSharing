@@ -12,4 +12,11 @@ class ApiController < ApplicationController
         end
     end
 
+    def tst
+        quality = {:teste => "oi"}
+        respond_to do |format|
+            format.json {render :json => quality, status: 200}
+        end
+    end
+
 end

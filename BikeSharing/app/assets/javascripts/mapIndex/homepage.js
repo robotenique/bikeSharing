@@ -17,17 +17,15 @@ function initMap() {
         zIndex:99999999
  });
     addStations(map);
-    map.setCenter(myLatlng);
-    updLocs(map, userM);
-    updStations(map);
-    // Configure the legend
-    var legend = document.getElementById('legend');
-    var div = document.createElement('div');
-    div.innerHTML = '<img src="/assets/okBike.png">   ' + "Há bikes livres <br>"+
-                    '<img src="/assets/badBike.png">   ' + "Nenhuma bike livre";
-    legend.appendChild(div);
-    map.controls[google.maps.ControlPosition.RIGHT_BOTTOM].push(legend);
 
+    map.setCenter(myLatlng);
+    $(document).ready(function() {
+        // Configure the legend
+        var legend = document.getElementById('legend');
+        map.controls[google.maps.ControlPosition.RIGHT_BOTTOM].push(legend);
+        updLocs(map, userM);
+        updStations(map);
+    });
 }
 
 /*==================Stations builder=====================
@@ -109,7 +107,7 @@ function createInfo(mkList, i) {
 // Update the stations from the API every 30 seconds
 async function updStations(mapi){
     while(true) {
-        mkList = getAPIinfo(mapi);
+        getAPIinfo(mapi);
         await sleep(10000);
     }
 }
@@ -148,9 +146,11 @@ function updMarkers(mkList, mapi) {
     if(stations.length > 0){
         for (var i = 0; i < stations.length; i++) {
             var m = stations[i];
-            m.setIcon(mkList["free"][i] == 0 ?  "/assets/badBike.png" : "/assets/okBike.png")
-            var content = createInfo(mkList, i);
-            bindInfoWindow(m, mapi, infowindow, content);
+            if(mkList["free"][i] != undefined) {
+                m.setIcon(mkList["free"][i] == 0 ?  "/assets/badBike.png" : "/assets/okBike.png")
+                var content = createInfo(mkList, i);
+                bindInfoWindow(m, mapi, infowindow, content);
+            }
         }
     }
 }
@@ -164,7 +164,6 @@ async function updLocs(mapi, userM) {
     while(true) {
         getGeoLocation();
         if (pos != ""){ // Only update the position when we have one!
-            console.log(pos.coords.latitude+", "+pos.coords.longitude);
             userM.setPosition(new google.maps.LatLng(
                               pos.coords.latitude,
                               pos.coords.longitude));
