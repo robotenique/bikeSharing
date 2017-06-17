@@ -30,7 +30,7 @@ function initMap() {
                 lastDest = "";
                 directionsDisplay.set('directions', null);
                 changeOpacity(undefined, 1); // Restore stations opacity
-                $("#routeFreeBike").html("<span class=\"glyphicon glyphicon-map-marker\"></span> Guardar Bike");
+                $("#routeFreeSlot").html("<span class=\"glyphicon glyphicon-map-marker\"></span> Guardar Bike");
             }
         }
     });
@@ -222,7 +222,7 @@ function displayCurrLoc(position){
 }
 
 /* THIS IS IMPORTANT! RAILS turbolinks duplicate the gmaps script insertion,
- * breaking a lot of the functionality on page reload. THis makes sure to include
+ * breaking a lot of the functionality on page reload. THIS makes sure to include
  * the script only once, as expected!
  */
 if(window.google){
@@ -248,12 +248,12 @@ function getUserPos(){
  * to get the nearest station with free slots
  */
 function freeSlotsListener(directionsService, directionsDisplay){
-    $("#routeFreeBike").click(function(){
+    $("#routeFreeSlot").click(function(){
         if(lastDest != "") {
             lastDest = "";
             directionsDisplay.set('directions', null);
             changeOpacity(undefined, 1); // Restore stations opacity
-            $("#routeFreeBike").html("<span class=\"glyphicon glyphicon-map-marker\"></span> Guardar Bike");
+            $("#routeFreeSlot").html("<span class=\"glyphicon glyphicon-map-marker\"></span> Guardar Bike");
             return;
         }
         if(pos != undefined){
@@ -268,7 +268,7 @@ function freeSlotsListener(directionsService, directionsDisplay){
                         calculateAndPlot(directionsService, directionsDisplay, destination);
                         changeOpacity(destination, 0.5);
                     }
-                    $("#routeFreeBike").html("<span class=\"glyphicon glyphicon-ban-circle\"></span> Apagar rota");
+                    $("#routeFreeSlot").html("<span class=\"glyphicon glyphicon-ban-circle\"></span> Apagar rota");
                 }
                 else{
                     window.alert("Não há estações com slots livres! D:");
