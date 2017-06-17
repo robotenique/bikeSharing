@@ -11,8 +11,8 @@
 </p>
 
 <p>
-  <strong>Free Slots:</strong>
-  <%= @station.free_slots %>
+  <strong>Empty Slots:</strong>
+  <%= @station.empty_slots %>
 </p>
 
 <p>
@@ -33,6 +33,16 @@
 <p>
   <strong>Longitude:</strong>
   <%= @station.longitude %>
+</p>
+
+<p>
+  <strong>Citybik_Station_UID:</strong>
+  <%= @station.citybik_station_uid %>
+</p>
+
+<p>
+  <strong>Citybik_Station_ID:</strong>
+  <%= @station.citybik_station_id %>
 </p>
 
 <%= link_to 'Edit', edit_station_path(@station) %> |

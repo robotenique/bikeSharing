@@ -72,7 +72,7 @@ class ApiController < ApplicationController
       methods = CitybikApiStation.station_methods
       get_sampa_stations.each do |s|
           methods.each do |m|
-              puts "#{m.to_s} -> #{CitybikApiStation.send(m.to_s, s) }"
+              puts "#{m.to_s} -> #{CitybikApiStation.send(m.to_s, s)}"
               puts ''
           end
       end
