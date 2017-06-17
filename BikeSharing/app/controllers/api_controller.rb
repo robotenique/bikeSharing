@@ -66,8 +66,13 @@ class ApiController < ApplicationController
       (station_list << result).flatten!
     end
 
+    methods = CitybikApiStation.station_methods
+
     station_list.each do |s|
-      puts s
+        methods.each do |m|
+            puts "#{m.to_s} -> #{CitybikApiStation.send(m.to_s, s) }"
+            puts ''
+        end
     end
   end
 
