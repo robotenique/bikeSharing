@@ -22,6 +22,11 @@
   </div>
 
   <div class="field">
+    <%= form.label :free_slots %>
+    <%= form.number_field :free_slots, id: :station_free_slots %>
+  </div>
+
+  <div class="field">
     <%= form.label :slots %>
     <%= form.number_field :slots, id: :station_slots %>
   </div>
@@ -32,13 +37,13 @@
   </div>
 
   <div class="field">
-    <%= form.label :lat %>
-    <%= form.text_field :lat, id: :station_lat %>
+    <%= form.label :latitude %>
+    <%= form.text_field :latitude, id: :station_latitude %>
   </div>
 
   <div class="field">
-    <%= form.label :long %>
-    <%= form.text_field :long, id: :station_long %>
+    <%= form.label :longitude %>
+    <%= form.text_field :longitude, id: :station_longitude %>
   </div>
 
   <div class="actions">

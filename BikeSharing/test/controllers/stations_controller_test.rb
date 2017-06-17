@@ -17,7 +17,7 @@ class StationsControllerTest < ActionDispatch::IntegrationTest
 
   test "should create station" do
     assert_difference('Station.count') do
-      post stations_url, params: { station: {company: @station.company, free_bikes: @station.free_bikes, slots: @station.slots, lat: @station.lat, long: @station.long, name: @station.name } }
+      post stations_url, params: { station: {company: @station.company, free_bikes: @station.free_bikes, free_slots: @station.free_slots, latitude: @station.latitude, longitude: @station.longitude, name: @station.name } }
     end
 
     assert_redirected_to station_url(Station.last)
@@ -34,7 +34,7 @@ class StationsControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "should update station" do
-    patch station_url(@station), params: { station: {company: @station.company, free_bikes: @station.free_bikes, slots: @station.slots, lat: @station.lat, long: @station.long, name: @station.name } }
+    patch station_url(@station), params: { station: {company: @station.company, free_bikes: @station.free_bikes, free_slots: @station.free_slots, latitude: @station.latitude, longitude: @station.longitude, name: @station.name } }
     assert_redirected_to station_url(@station)
   end
 

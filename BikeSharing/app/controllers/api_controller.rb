@@ -58,4 +58,17 @@ class ApiController < ApplicationController
         earth_R * 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a))
     end
 
+  def self.get_sampa_stations
+    station_list = []
+    for n in @@networks
+      resp = Net::HTTP.get_response(URI.parse(n)).body
+      result = JSON.parse(resp)['network']['stations']
+      (station_list << result).flatten!
+    end
+
+    station_list.each do |s|
+      puts s
+    end
+  end
+
 end

@@ -7,10 +7,11 @@
     <tr>
       <th>Company</th>
       <th>Free bikes</th>
+      <th>Free Slots</th>
       <th>Slots</th>
       <th>Name</th>
-      <th>Lat</th>
-      <th>Long</th>
+      <th>Latitude</th>
+      <th>Longitude</th>
       <th colspan="3"></th>
     </tr>
   </thead>
@@ -20,10 +21,11 @@
       <tr>
         <td><%= station.company %></td>
         <td><%= station.free_bikes %></td>
+        <td><%= station.free_slots %></td>
         <td><%= station.slots %></td>
         <td><%= station.name %></td>
-        <td><%= station.lat %></td>
-        <td><%= station.long %></td>
+        <td><%= station.latitude %></td>
+        <td><%= station.longitude %></td>
         <td><%= link_to 'Show', station %></td>
         <td><%= link_to 'Edit', edit_station_path(station) %></td>
         <td><%= link_to 'Destroy', station, method: :delete, data: { confirm: 'Are you sure?' } %></td>

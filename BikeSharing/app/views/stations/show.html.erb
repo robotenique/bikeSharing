@@ -11,6 +11,11 @@
 </p>
 
 <p>
+  <strong>Free Slots:</strong>
+  <%= @station.free_slots %>
+</p>
+
+<p>
   <strong>Slots:</strong>
   <%= @station.slots %>
 </p>
@@ -21,13 +26,13 @@
 </p>
 
 <p>
-  <strong>Lat:</strong>
-  <%= @station.lat %>
+  <strong>Latitude:</strong>
+  <%= @station.latitude %>
 </p>
 
 <p>
-  <strong>Long:</strong>
-  <%= @station.long %>
+  <strong>Longitude:</strong>
+  <%= @station.longitude %>
 </p>
 
 <%= link_to 'Edit', edit_station_path(@station) %> |

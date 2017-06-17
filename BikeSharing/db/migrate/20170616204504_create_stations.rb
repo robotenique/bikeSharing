@@ -3,10 +3,11 @@ class CreateStations < ActiveRecord::Migration[5.1]
     create_table :stations do |t|
       t.string :company
       t.integer :free_bikes
+      t.integer :free_slots
       t.integer :slots
       t.string :name
-      t.float :lat
-      t.float :long
+      t.float :latitude
+      t.float :longitude
 
       t.timestamps
     end

@@ -15,10 +15,11 @@ ActiveRecord::Schema.define(version: 20170616204504) do
   create_table "stations", force: :cascade do |t|
     t.string "company"
     t.integer "free_bikes"
+    t.integer "free_slots"
     t.integer "slots"
     t.string "name"
-    t.float "lat"
-    t.float "long"
+    t.float "latitude"
+    t.float "longitude"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
