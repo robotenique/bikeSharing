@@ -65,15 +65,16 @@ class ApiController < ApplicationController
       result = JSON.parse(resp)['network']['stations']
       (station_list << result).flatten!
     end
-
-    methods = CitybikApiStation.station_methods
-
-    station_list.each do |s|
-        methods.each do |m|
-            puts "#{m.to_s} -> #{CitybikApiStation.send(m.to_s, s) }"
-            puts ''
-        end
-    end
+    station_list
   end
 
+  def self.test_get_sampa_stations
+      methods = CitybikApiStation.station_methods
+      get_sampa_stations.each do |s|
+          methods.each do |m|
+              puts "#{m.to_s} -> #{CitybikApiStation.send(m.to_s, s) }"
+              puts ''
+          end
+      end
+  end
 end
