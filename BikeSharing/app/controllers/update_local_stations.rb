@@ -11,7 +11,7 @@ class UpdateLocalStations
     #   puts 'buscando no bd local estacao'
     #   puts "\t #{CitybikApiStation.station_name remote_station}"
     #   puts "\t #{CitybikApiStation.id remote_station}"
-      local_station = Station.find_by('name', CitybikApiStation.station_name(remote_station))
+      local_station = Station.find_by_citybik_station_id(CitybikApiStation.id(remote_station))
       if local_station == nil
         save_new_remote_station remote_station
       else
