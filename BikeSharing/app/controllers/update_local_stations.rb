@@ -8,9 +8,9 @@ class UpdateLocalStations
   private
   def self.update_single_station(remote_station)
     # if (CitybikApiStation.id remote_station) == '279377798a8f6d4ad026fb518cbba9c3'
-      puts 'buscando no bd local estacao'
-      puts "\t #{CitybikApiStation.station_name remote_station}"
-      puts "\t #{CitybikApiStation.id remote_station}"
+    #   puts 'buscando no bd local estacao'
+    #   puts "\t #{CitybikApiStation.station_name remote_station}"
+    #   puts "\t #{CitybikApiStation.id remote_station}"
       local_station = Station.find_by('name', CitybikApiStation.station_name(remote_station))
       if local_station == nil
         save_new_remote_station remote_station
