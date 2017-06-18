@@ -17,14 +17,20 @@ class ApiController < ApplicationController
     end
 
     # Action that returns a json with the station closer to the user with
-    # free slots!
-    def free_slots
+    # free slots or free bikes!
+    def free_slots_bikes
         uPos = params[:pos]
         foundSt = false
         destStation = ""
+        if params[:query] == "slot"
+            #what to search for like slots or bikes on a station
+            what = "empty_slots"
+        else
+            what = "free_bikes"
+        end
         stationList = get_stationList(uPos)
         for station in stationList
-            if station["empty_slots"] != 0
+            if station[what] != 0
                 destStation = station["name"]
                 foundSt = true
                 break
