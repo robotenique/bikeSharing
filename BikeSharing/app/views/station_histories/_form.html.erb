@@ -1,0 +1,37 @@
+<%= form_with(model: station_history, local: true) do |form| %>
+  <% if station_history.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(station_history.errors.count, "error") %> prohibited this station_history from being saved:</h2>
+
+      <ul>
+      <% station_history.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= form.label :free_slots %>
+    <%= form.number_field :free_slots, id: :station_history_free_slots %>
+  </div>
+
+  <div class="field">
+    <%= form.label :free_bikes %>
+    <%= form.number_field :free_bikes, id: :station_history_free_bikes %>
+  </div>
+
+  <div class="field">
+    <%= form.label :rate %>
+    <%= form.text_field :rate, id: :station_history_rate %>
+  </div>
+
+  <div class="field">
+    <%= form.label :citybik_station_id %>
+    <%= form.text_field :citybik_station_id, id: :station_history_citybik_station_id %>
+  </div>
+
+  <div class="actions">
+    <%= form.submit %>
+  </div>
+<% end %>

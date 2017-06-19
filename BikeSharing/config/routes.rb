@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  resources :station_histories
   resources :open_times
   resources :positions
   resources :stations

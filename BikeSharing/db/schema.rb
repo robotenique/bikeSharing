@@ -10,7 +10,18 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170616204504) do
+ActiveRecord::Schema.define(version: 20170619032808) do
+
+  create_table "station_histories", force: :cascade do |t|
+    t.integer "free_slots"
+    t.integer "free_bikes"
+    t.float "rate"
+    t.string "citybik_station_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.integer "station_id"
+    t.index ["station_id"], name: "index_station_histories_on_station_id"
+  end
 
   create_table "stations", force: :cascade do |t|
     t.string "company"
