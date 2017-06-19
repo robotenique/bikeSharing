@@ -213,7 +213,6 @@ function getGeoLocation() {
     if (navigator.geolocation){
         navigator.geolocation.getCurrentPosition(setGeoCookie);
         navigator.geolocation.getCurrentPosition(displayCurrLoc);
-        console.log(pos.coords);
     }
 }
 // Geolocation helper callbacks
