@@ -69,6 +69,6 @@ class StationHistoriesController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def station_history_params
-      params.require(:station_history).permit(:free_slots, :free_bikes, :rate, :citybik_station_id)
+      params.require(:station_history).permit(:free_slots, :free_bikes, :rate)
     end
 end

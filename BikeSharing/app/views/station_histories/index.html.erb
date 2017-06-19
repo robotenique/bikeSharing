@@ -8,7 +8,6 @@
       <th>Free slots</th>
       <th>Free bikes</th>
       <th>Rate</th>
-      <th>Citybik station</th>
       <th colspan="3"></th>
     </tr>
   </thead>
@@ -19,7 +18,6 @@
         <td><%= station_history.free_slots %></td>
         <td><%= station_history.free_bikes %></td>
         <td><%= station_history.rate %></td>
-        <td><%= station_history.citybik_station_id %></td>
         <td><%= link_to 'Show', station_history %></td>
         <td><%= link_to 'Edit', edit_station_history_path(station_history) %></td>
         <td><%= link_to 'Destroy', station_history, method: :delete, data: { confirm: 'Are you sure?' } %></td>

@@ -4,7 +4,6 @@ class CreateStationHistories < ActiveRecord::Migration[5.1]
       t.integer :free_slots
       t.integer :free_bikes
       t.float :rate
-      t.string :citybik_station_id
 
       t.timestamps
     end
