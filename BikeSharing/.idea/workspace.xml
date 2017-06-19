@@ -30,16 +30,6 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="station_histories_controller.rb" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/controllers/station_histories_controller.rb">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="917">
-              <caret line="71" column="77" lean-forward="false" selection-start-line="71" selection-start-column="77" selection-end-line="71" selection-end-column="77" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
     </leaf>
   </component>
   <component name="FindInProjectRecents">
@@ -686,12 +676,12 @@
       <workItem from="1495818624525" duration="11938000" />
       <workItem from="1497390216431" duration="2126000" />
       <workItem from="1497457419800" duration="89000" />
-      <workItem from="1497828992205" duration="6072000" />
+      <workItem from="1497828992205" duration="6188000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="78631000" />
+    <option name="totallyTimeSpent" value="78747000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-3" y="43" width="1922" height="1011" extended-state="0" />
@@ -1064,7 +1054,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/app/controllers/station_histories_controller.rb">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="917">
+        <state relative-caret-position="647">
           <caret line="71" column="77" lean-forward="false" selection-start-line="71" selection-start-column="77" selection-end-line="71" selection-end-column="77" />
           <folding />
         </state>
