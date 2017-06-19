@@ -1,8 +1,19 @@
-<a id="routeFreeSlot" href="javascript:void(0)" class="btn btn-lg btn-primary">
-<span class="glyphicon glyphicon-map-marker"></span> Guardar Bike</a>
-<a id="myPosition" href="javascript:void(0)" class="btn btn-lg btn-info">
-<span class="glyphicon glyphicon-map-marker"></span> Minha localização</a>
+<form class="form-inline">
+    Meio de transporte: 
+    <select class="form-control div-md-2" id="travelMode">
+        <option value="BICYCLING">De Bicicleta</option>
+        <option value="DRIVING">De Carro</option>
+        <option value="WALKING">A pé</option>
+        <option value="TRANSIT">Transporte Público</option>
+    </select>
+<a id="routeFreeSlot" href="javascript:void(0)" class="btn btn-md btn-default">
+    <span class="glyphicon glyphicon-map-marker"></span> Guardar Bike</a>
+<a id="routeFreeBike" style="display:inline" href="javascript:void(0)" class="btn btn-md btn-default">
+    <span class="glyphicon glyphicon-map-marker"></span> Pegar uma Bike</a>
+<a id="myPosition" href="javascript:void(0)" class="btn btn-md btn-info">
+    <span class="glyphicon glyphicon-screenshot"></span> Minha localização</a>
+</form>
 <div id="legend"><h3>Legenda</h3>
-        <font size="3"><img src="/assets/okBike.png"> Há bikes livres<br>
+    <font size="3"><img src="/assets/okBike.png"> Há bikes livres<br>
         <img src="/assets/badBike.png"> Nenhuma bike livre</font></div>
 <div id="basic_map" class="div-sm-12 div-md-12"></div>
