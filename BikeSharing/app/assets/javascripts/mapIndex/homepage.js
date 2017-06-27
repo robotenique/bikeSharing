@@ -47,7 +47,7 @@ function initMap() {
     freeSlotsListener(directionsService, directionsDisplay);
     // Listener for the freeBikes button
     freeBikesListener(directionsService, directionsDisplay);
-}
+};
 
 /*==================Stations builder=====================
  * Functions to build the stations from the first time!
@@ -57,7 +57,7 @@ function addStations(mapi){
     $.getJSON("https://api.citybik.es/v2/networks/bikesampa", function(json) {
         json = json['network']['stations'];
         var mkList = {"lat": [], "lng": [], "img": [], "name": [], "free": [], "emptyS": []};
-        for (var st of json) {
+        json.forEach(function(st, index){
             var txt = st['free_bikes'] == 0 ?  "/assets/badBike.png" : "/assets/okBike.png";
             mkList["lat"].push(st['latitude']);
             mkList["lng"].push(st['longitude']);
@@ -65,15 +65,16 @@ function addStations(mapi){
             mkList["name"].push(st['name']);
             mkList["free"].push(st['free_bikes']);
             mkList["emptyS"].push(st['empty_slots']);
-        }
+        });
         addCicloSampa(mapi, mkList);
     });
-}
+};
 // Helper callback to add stations from the cicloSampa provider
 function addCicloSampa(mapi, mkList) {
     $.getJSON("https://api.citybik.es/v2/networks/ciclosampa", function(json) {
         json = json['network']['stations'];
-        for (var st of json) {
+
+        json.forEach(function(st, index){
             var txt = st['free_bikes'] == 0 ?  "/assets/badBike.png" : "/assets/okBike.png";
             mkList["lat"].push(st['latitude']);
             mkList["lng"].push(st['longitude']);
@@ -81,10 +82,10 @@ function addCicloSampa(mapi, mkList) {
             mkList["name"].push(st['name']);
             mkList["free"].push(st['free_bikes']);
             mkList["emptyS"].push(st['empty_slots']);
-        }
+        });
         setMarkers(mapi, mkList);
     });
-}
+};
 
 /* Add the markers to the map */
 function setMarkers(mapi, mkList) {
@@ -103,7 +104,7 @@ function setMarkers(mapi, mkList) {
         stations.push(mk);
 
     }
-}
+};
 
 //==================InfoWindow creator=====================
 //Add a click listener to a given marker to display slot info
@@ -112,7 +113,7 @@ function bindInfoWindow(marker, mapi, infowindow, html) {
         infowindow.setContent(html);
         infowindow.open(mapi, marker);
     });
-}
+};
 // Returns the formatted string for a given marker
 function createInfo(mkList, i) {
     var bik = mkList["free"][i] != 1 ? " bikes livres" : " bike livre";
@@ -122,46 +123,43 @@ function createInfo(mkList, i) {
         '<p><font size="3" color=\"'+c1+'\"><b>'+mkList["free"][i]+bik+'</b></font><br>'+
         '<font size="3" color="MidnightBlue"><b>'+mkList["emptyS"][i]+slot+'</b><br></p>';
     return content;
-}
+};
 
 //==================Stations updater=====================
 // Update the stations from the API every 30 seconds
-async function updStations(mapi){
-    while(true) {
-        getAPIinfo(mapi);
-        await sleep(10000);
-    }
-}
+function updStations(mapi){
+     setInterval(function(){getAPIinfo(mapi);}, 10000);
+};
 // Get the API info
 function getAPIinfo(mapi) {
     $.getJSON("https://api.citybik.es/v2/networks/bikesampa", function(json) {
         json = json['network']['stations'];
         var mkList = {"lat": [], "lng": [], "img": [], "name": [], "free": [], "emptyS": []};
-        for (var st of json) {
+        json.forEach(function(st, index){
             var txt = st['free_bikes'] == 0 ?  "/assets/badBike.png" : "/assets/okBike.png";
             mkList["img"].push(txt);
             mkList["name"].push(st['name']);
             mkList["free"].push(st['free_bikes']);
             mkList["emptyS"].push(st['empty_slots']);
-        }
+        });
         getCicloSampa(mkList, mapi);
     });
 
-}
+};
 // Ciclo Sampa helper
 function getCicloSampa(mkList, mapi){
     $.getJSON("https://api.citybik.es/v2/networks/ciclosampa", function(json) {
         json = json['network']['stations'];
-        for (var st of json) {
+        json.forEach(function(st, index){
             var txt = st['free_bikes'] == 0 ?  "/assets/badBike.png" : "/assets/okBike.png";
             mkList["img"].push(txt);
             mkList["name"].push(st['name']);
             mkList["free"].push(st['free_bikes']);
             mkList["emptyS"].push(st['empty_slots']);
-        }
+        });
         updMarkers(mkList, mapi);
     });
-}
+};
 // Update the information if needed
 function updMarkers(mkList, mapi) {
     if(stations.length > 0){
@@ -174,7 +172,7 @@ function updMarkers(mkList, mapi) {
             }
         }
     }
-}
+};
 
 //==================Geolocation updater=====================
 // Initializes the user position for the first time
@@ -188,14 +186,10 @@ function initializeUserPos(mapi, userM) {
             mapi.setCenter(nPos);
         });
     }
-}
-// Sleep helper function
-function sleep(ms) {
-    return new Promise(resolve => setTimeout(resolve, ms));
-}
+};
 // Updates the location of the user every 15 seconds
-async function updLocs(mapi, userM) {
-    while(true) {
+function updLocs(mapi, userM) {
+    setInterval(function(){
         getGeoLocation();
         // Only update the position when we have one, and it has changed!
         if (pos != "" && (userM.getPosition().lat() != pos.coords.latitude ||
@@ -205,25 +199,24 @@ async function updLocs(mapi, userM) {
                 pos.coords.longitude));
             if(userM.getMap() != mapi){userM.setMap(mapi);}
         }
-        await sleep(15000);
-    }
-}
+    }, 15000);
+};
 // get the geolocation and pass to callbacks
 function getGeoLocation() {
     if (navigator.geolocation){
         navigator.geolocation.getCurrentPosition(setGeoCookie);
         navigator.geolocation.getCurrentPosition(displayCurrLoc);
     }
-}
+};
 // Geolocation helper callbacks
 function setGeoCookie(position) {
     var cookie_val = position.coords.latitude + "|" + position.coords.longitude;
     document.cookie = "lat_lng=" + escape(cookie_val);
-}
+};
 // This should be used when getting the user position
 function displayCurrLoc(position){
     pos = position;
-}
+};
 
 /* THIS IS IMPORTANT! RAILS turbolinks duplicate the gmaps script insertion,
  * breaking a lot of the functionality on page reload. THIS makes sure to include
@@ -247,20 +240,20 @@ function getUserPos(){
     else{
         return undefined;
     }
-}
+};
 /* Listener to the freeSlots button. Makes a request to the controller
  * to get the nearest station with free slots
  */
 function freeSlotsListener(directionsService, directionsDisplay){
     $("#routeFreeSlot").click(function(){getFreeSlotBike("slot", directionsService, directionsDisplay)});
-}
+};
 
 /* Listener to the freeBike button. Makes a request to the controller
  * to get the nearest station with free bike
  */
 function freeBikesListener(directionsService, directionsDisplay){
     $("#routeFreeBike").click(function(){getFreeSlotBike("bike", directionsService, directionsDisplay)});
-}
+};
 
 /*
  * Helper function that receives a query for slots os bikes and plots
@@ -300,7 +293,7 @@ function getFreeSlotBike(query, directionsService, directionsDisplay) {
         window.alert("Precisamos da sua posição...");
     }
 
-}
+};
 
 // Send the specifications to gmaps, calculate and plot the route
 function calculateAndPlot(directionsService, directionsDisplay, end, travelBy) {
@@ -316,18 +309,17 @@ function calculateAndPlot(directionsService, directionsDisplay, end, travelBy) {
             window.alert('Houve falha no cálculo da rota devido a ' + status);
         }
     });
-}
+};
 // Get the station instance in the map (a marker) which name is mySt
 function obtainStation(mySt){
-    if(stations.length > 0){
-        for (st of stations) {
-            if(mySt == st.getTitle()){
-                return st;
-            }
+    for (var i = 0; i < stations.length; i++) {
+        st = stations[i];
+        if(mySt == st.getTitle()){
+            return st;
         }
-        return undefined;
     }
-}
+    return undefined;
+};
 // Get the distance between source and destination
 function getDistance(source, destination) {
     s = source.getPosition()
@@ -336,7 +328,7 @@ function getDistance(source, destination) {
         new google.maps.LatLng(s.lat(), s.lng()),
         new google.maps.LatLng(d.lat(), d.lng())
     );
-}
+};
 // Return the style of the map used
 function cleanMapStyle() {
     return [
@@ -393,7 +385,7 @@ function cleanMapStyle() {
             ]
         }
     ];
-}
+};
 // Change the opacity of every station but the "thisStation". if undefined, change everything
 function changeOpacity(thisStation, opc) {
     if(thisStation == undefined){thisName = "";}
@@ -404,7 +396,7 @@ function changeOpacity(thisStation, opc) {
             m.setOpacity(opc);
         }
     }
-}
+};
 // Listener to the 'myPosition' button
 function myPosListener(mapi, userM){
     $("#myPosition").click(function(){
@@ -417,4 +409,4 @@ function myPosListener(mapi, userM){
             });
         }
     });
-}
+};
