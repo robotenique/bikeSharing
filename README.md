@@ -40,10 +40,11 @@ Em seguida, fazer o migrate do banco de dados, e rodar com *rails s*.
 A lista completa das dependências pode ser vista no *.gemfile* dentro da pasta.
 
 
+## Versão live (heroku)
+As versões enviadas podem ser vistas no [heroku][https://immense-dawn-86994.herokuapp.com/]! :D
+
 
 ## Telas (mockup)
-
-
 
 
 
