@@ -38,12 +38,16 @@
 
         <div class="rightmenu">
           <ul class="list-group">
-            <li class="list-group-item">Pagina inicial</li>
+            <li class="list-group-item"><a href="/">Pagina inicial</a></li>
             <li class="list-group-item">Estatisticas</li>
             <li class="list-group-item">Rank das estações</li>
             <li class="list-group-item">Encontrar locais livre para bike</li>
-            <li class="list-group-item">Cadastre-se</li>
-            <li class="list-group-item">Entrar</li>
+            <% if !user_signed_in? %>
+            <li class="list-group-item"><a href="/users/sign_up">Cadastre-se</a></li>
+            <li class="list-group-item"><a href="/users/sign_in">Entrar</a></li>
+            <% else %>
+            <li class="list-group-item"><a href="/users/sign_out">Laisser</a></li>
+            <% end %>
           </ul>
         </div>
 
