@@ -7,8 +7,26 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand" href="/">BikeSharing SP</a>
+            <button class="btn btn-md btn-default" id="leftmenu" onclick="leftmenu()" style=" position: fixed; top: 5px; left: 5px; "> <span class="glyphicon glyphicon-list"></span> </button>
+            <a class="navbar-brand" href="/" style=" margin-left: 50px; ">BikeSharing SP</a>
+            <button class="btn btn-md btn-default" id="rightmenu" onclick="rightmenu()" style="position: fixed;right: 5px;top: 5px;"> <span class="glyphicon glyphicon-list"></span> </button>
         </div>
+
+        <div class="leftmenu">
+
+        </div>
+
+        <div class="rightmenu">
+          <ul class="list-group">
+            <li class="list-group-item">Pagina inicial</li>
+            <li class="list-group-item">Estatisticas</li>
+            <li class="list-group-item">Rank das estações</li>
+            <li class="list-group-item">Encontrar locais livre para bike</li>
+            <li class="list-group-item">Cadastre-se</li>
+            <li class="list-group-item">Entrar</li>
+          </ul>
+        </div>
+
         <div id="navbar" class="navbar-collapse collapse" aria-expanded="false" style="height: 1px;">
             <ul class="nav navbar-nav">
                 <% if request.env['PATH_INFO'] == "/" %>

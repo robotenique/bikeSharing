@@ -17,3 +17,11 @@
 //= require turbolinks
 //= require underscore
 //= require_directory ./js
+
+
+function leftmenu() {
+  $( ".leftmenu" ).toggleClass( "toggle_menu" )
+}
+function rightmenu() {
+  $( ".rightmenu" ).toggleClass( "toggle_menu" )
+}
