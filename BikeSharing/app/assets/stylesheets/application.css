@@ -22,7 +22,8 @@
     position: fixed;
     left: 0;
     top: 40px;
-    z-index: 99999
+    z-index: 99999;
+    overflow: scroll;
   }
 
 
@@ -34,7 +35,8 @@
      position: fixed;
      right: 0;
      top: 40px;
-     z-index: 99999
+     z-index: 99999;
+     overflow: scroll;
    }
 .toggle_menu{
   display: inline;

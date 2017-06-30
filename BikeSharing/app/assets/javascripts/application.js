@@ -25,3 +25,10 @@ function leftmenu() {
 function rightmenu() {
   $( ".rightmenu" ).toggleClass( "toggle_menu" )
 }
+var addr_chosen = '#destino';
+function choose_field(value) {
+  addr_chosen = value;
+}
+function choose(value) {
+  $(addr_chosen).val(value)
+}

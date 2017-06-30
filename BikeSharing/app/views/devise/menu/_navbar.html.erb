@@ -14,6 +14,26 @@
 
         <div class="leftmenu">
 
+          <div class="input-group">
+            <span class="input-group-addon" ><span class="glyphicon glyphicon-pushpin"></span></span>
+            <input type="text" class="form-control" id="origem" onfocus="choose_field('#origem')" placeholder="Endereço inicial" aria-describedby="sizing-addon2">
+          </div>
+
+          <div class="input-group">
+            <span class="input-group-addon" ><span class="glyphicon glyphicon-pushpin"></span></span>
+            <input type="text" id="destino" onfocus="choose_field('#destino')"  class="form-control" placeholder="Endereço destino" aria-describedby="sizing-addon2">
+          </div>
+
+          <h4>Estações Favoritas</h4>
+          <div class="list-group">
+            <!-- TODO : colocar de forma dimanica atravez da class rank que ainda sera criada :P -->
+            <% Station.all.each do |s| %>
+              <button type="button" class="list-group-item" value="<%= s.name %>" onclick="choose(this.value)" ><%= s.name %></button>
+            <% end %>
+          </div>
+
+
+
         </div>
 
         <div class="rightmenu">
