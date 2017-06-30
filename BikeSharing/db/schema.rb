@@ -43,8 +43,8 @@ ActiveRecord::Schema.define(version: 20170705024259) do
     t.string "citybik_station_uid"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.datetime "open_time"
-    t.datetime "close_time"
+    t.time "open_time"
+    t.time "close_time"
   end
 
   create_table "users", force: :cascade do |t|

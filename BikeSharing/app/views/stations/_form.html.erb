@@ -51,10 +51,18 @@
     <%= form.text_field :citybik_station_uid, id: :station_citybik_station_uid %>
   </div>
 
-  <div class="field">
-    <%= form.label :citybik_station_id %>
-    <%= form.text_field :citybik_station_id, id: :station_citybik_station_id %>
-  </div>
+    <div class="field">
+      <%= form.label :citybik_station_id %>
+      <%= form.text_field :citybik_station_id, id: :station_citybik_station_id %>
+    </div>
+    <div class="field">
+      <%= form.label :open_time %>
+      <%= form.time_select :open_time, id: :open_time %>
+    </div>
+    <div class="field">
+      <%= form.label :close_time %>
+      <%= form.time_select :close_time, id: :close_time %>
+    </div>
 
   <div class="actions">
     <%= form.submit %>
