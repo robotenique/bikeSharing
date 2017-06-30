@@ -77,9 +77,6 @@ class StationsController < ApplicationController
                                       :latitude,
                                       :longitude,
                                       :citybik_station_uid,
-                                      :citybik_station_id,
-                                      :open_time,
-                                      :close_time
-                                      )
+                                      :citybik_station_id)
     end
 end
