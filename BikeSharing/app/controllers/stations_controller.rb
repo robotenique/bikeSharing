@@ -21,6 +21,17 @@ class StationsController < ApplicationController
   def edit
   end
 
+  def free_slots
+    @free_slot = Station.where("empty_slots > 0")
+
+    if params[:sort] == "name"
+      @free_slot = @free_slot.order("name asc")
+      return
+    end
+
+    @free_slot = @free_slot.order("empty_slots desc")
+
+  end
   # POST /stations
   # POST /stations.json
   def create

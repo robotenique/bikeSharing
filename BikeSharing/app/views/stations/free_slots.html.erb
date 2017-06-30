@@ -1,0 +1,21 @@
+<p id="notice"><%= notice %></p>
+
+<div class="container">
+  <h2>Estaciones avec slots libres</h2>
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        <th><a href="<%= free_slots1_path('name') %>">Estacion</a></th>
+        <th><a href="<%= free_slots_path %>">Slots Libres</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @free_slot.each do |s| %>
+        <tr>
+          <td> <%= "#{s.name}" %> </td>
+          <td> <%= "#{s.empty_slots}" %> </td>
+        </tr>
+      <%end%>
+    </tbody>
+  </table>
+</div>
