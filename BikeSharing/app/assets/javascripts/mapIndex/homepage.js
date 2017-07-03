@@ -410,3 +410,15 @@ function myPosListener(mapi, userM){
         }
     });
 };
+
+$("#freeSlot").click(function(){
+    $("html").css({'overflow': 'visible'});
+    $("body").css({'overflow': 'visible'});
+    console.log("CLICOU");
+});
+
+$( document ).ready(function() {
+    $("html").css({'overflow': 'hidden'});
+    $("body").css({'overflow': 'hidden'});
+    console.log("SETOU");
+});

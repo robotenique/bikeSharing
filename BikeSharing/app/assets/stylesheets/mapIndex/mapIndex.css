@@ -22,19 +22,18 @@ margin-right: auto;
   width: auto; display:inline;
 }
 
-
-html, body, .container-fluid,  #basic_map {
+html, body, #basic_map {
     width: 100% !important;
     height: 100% !important;
     margin: 0;
     padding: 0;
-    overflow: hidden !important;
+    overflow: hidden;
+
 }
 #basic_map {
     position: relative;
     height: 96%;
     margin: 0 auto;
-    overflow: hidden !important;
     line-height: 1.35;
     white-space: nowrap;
 }
