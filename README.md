@@ -41,7 +41,7 @@ A lista completa das dependências pode ser vista no *.gemfile* dentro da pasta.
 
 
 ## Versão live (heroku)
-As versões enviadas podem ser vistas no [heroku][https://immense-dawn-86994.herokuapp.com/]! :D
+As versões enviadas podem ser vistas no ![heroku][https://immense-dawn-86994.herokuapp.com/]! :D
 
 
 ## Telas (mockup)
