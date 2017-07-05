@@ -1,0 +1,17 @@
+<h1>BookmarkStation#list_rank</h1>
+
+<table>
+  <tr>
+    <td>Rank</td>
+    <td>Estação</td>
+    <td>Bookmarks</td>
+  </tr>
+  <% i = 0 %>
+  <% @ranked_bookmark_stations.each do |bookmarked_rank|%> <% i = i + 1 %>
+      <tr>
+        <td><%= i %></td>
+        <td><%= "#{bookmarked_rank[0]} - #{Station.find(bookmarked_rank[0]).name}" %></td>
+        <td><%= bookmarked_rank[1] %></td>
+      </tr>
+  <% end %>
+</table>

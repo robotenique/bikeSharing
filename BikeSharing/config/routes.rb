@@ -5,6 +5,8 @@ Rails.application.routes.draw do
 
   get 'bookmark_station/list'
 
+  get 'bookmark_station/list_rank'
+
   resources :station_histories
   resources :open_times
   resources :positions
