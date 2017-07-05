@@ -12,8 +12,8 @@ class BookmarkedRank < AbstractRank
   end
 
   def print_rank
-    get_rank.each do |asd|
-      puts "estacao #{asd[0]} - #{Station.find(asd[0]).name} tem #{asd[1]} bookmarks"
+    get_rank.each do |bookmarked_rank|
+      puts "estacao #{bookmarked_rank[0]} - #{Station.find(bookmarked_rank[0]).name} tem #{bookmarked_rank[1]} bookmarks"
     end
   end
 end
