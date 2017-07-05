@@ -6,5 +6,6 @@ class BookmarkStationController < ApplicationController
   end
 
   def list
+    @bookmark_stations = BookmarkStation.all
   end
 end

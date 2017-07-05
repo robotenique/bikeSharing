@@ -1,2 +1,14 @@
 <h1>BookmarkStation#list</h1>
-<p>Find me in app/views/bookmark_station/list.html.erb</p>
+
+<table>
+  <tr>
+    <td>Estação</td>
+    <td>email do usuário</td>
+  </tr>
+  <% @bookmark_stations.each do |bm| %>
+    <tr>
+      <td><%= bm.station.name %></td>
+      <td><%= bm.user.email %></td>
+    </tr>
+  <% end %>
+</table>
