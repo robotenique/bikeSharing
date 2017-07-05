@@ -10,7 +10,16 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170619032808) do
+ActiveRecord::Schema.define(version: 20170705024259) do
+
+  create_table "bookmark_stations", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.integer "station_id"
+    t.integer "user_id"
+    t.index ["station_id"], name: "index_bookmark_stations_on_station_id"
+    t.index ["user_id"], name: "index_bookmark_stations_on_user_id"
+  end
 
   create_table "station_histories", force: :cascade do |t|
     t.integer "free_slots"

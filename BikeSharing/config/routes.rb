@@ -1,4 +1,10 @@
 Rails.application.routes.draw do
+  get 'bookmark_station/unbookmark'
+
+  get 'bookmark_station/bookmark'
+
+  get 'bookmark_station/list'
+
   resources :station_histories
   resources :open_times
   resources :positions
