@@ -3,12 +3,16 @@
 <table>
   <tr>
     <td>Estação</td>
-    <td>email do usuário</td>
+    <% if !user_signed_in? %>
+      <td>email do usuário</td>
+    <% end %>
   </tr>
   <% @bookmark_stations.each do |bm| %>
     <tr>
       <td><%= bm.station.name %></td>
-      <td><%= bm.user.email %></td>
+      <% if !user_signed_in? %>
+        <td><%= bm.user.email %></td>
+      <% end %>
     </tr>
   <% end %>
 </table>

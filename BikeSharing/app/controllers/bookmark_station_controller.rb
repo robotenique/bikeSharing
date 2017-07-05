@@ -6,7 +6,14 @@ class BookmarkStationController < ApplicationController
   end
 
   def list
-    @bookmark_stations = BookmarkStation.all
+    if user_signed_in?
+      # The following line of code
+      # find_by user_id: #{current_user.id}
+      # returns only the first station...
+      @bookmark_stations = BookmarkStation.find_by_sql "SELECT * FROM bookmark_stations WHERE \"user_id\" = #{current_user.id}"
+    else
+      @bookmark_stations = BookmarkStation.all
+    end
   end
 
   def list_rank
