@@ -24,11 +24,19 @@
             <input type="text" id="destino" onfocus="choose_field('#destino')"  class="form-control" placeholder="Endereço destino" aria-describedby="sizing-addon2">
           </div>
 
-          <h4>Estações Favoritas</h4>
           <div class="list-group">
-            <!-- TODO : colocar de forma dimanica atravez da class rank que ainda sera criada :P -->
-            <% Station.all.each do |s| %>
-              <button type="button" class="list-group-item" value="<%= s.name %>" onclick="choose(this.value)" ><%= s.name %></button>
+            <% if user_signed_in? %>
+              <h4>Estações Favoritas</h4>
+              <% BookmarkStationController.get_list_by_user_id(current_user.id).each do |s| %>
+                <%station_name = Station.find(s.station.id).name %>
+                <button type="button" class="list-group-item" value="<%= station_name %>" onclick="choose(this.value)" ><%= station_name %></button>
+              <% end %>
+            <% else %>
+              <h4>Estações</h4>
+              <% Station.all.each do |s| %>
+                <%station_name = s.name %>
+                <button type="button" class="list-group-item" value="<%= station_name %>" onclick="choose(this.value)" ><%= station_name %></button>
+              <% end %>
             <% end %>
           </div>
 

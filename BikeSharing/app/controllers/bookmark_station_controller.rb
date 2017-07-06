@@ -41,10 +41,15 @@ class BookmarkStationController < ApplicationController
       # The following line of code
       # find_by user_id: #{current_user.id}
       # returns only the first station...
-      @bookmark_stations = BookmarkStation.find_by_sql "SELECT * FROM bookmark_stations WHERE \"user_id\" = #{current_user.id}"
+      @bookmark_stations = self.class.get_list_by_user_id current_user.id
     else
       @bookmark_stations = BookmarkStation.all
     end
+  end
+
+  def self.get_list_by_user_id user_id
+    return nil unless user_id.instance_of? Integer
+    return BookmarkStation.find_by_sql "SELECT * FROM bookmark_stations WHERE \"user_id\" = #{user_id}"
   end
 
   def list_rank
