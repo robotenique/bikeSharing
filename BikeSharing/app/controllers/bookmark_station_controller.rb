@@ -3,6 +3,17 @@ class BookmarkStationController < ApplicationController
   end
 
   def bookmark
+    station = Station.find_by(name: params[:station_name])
+    user    = User.find(current_user.id)
+    if BookmarkStation.find_by(user: user, station: station)
+      @ret_message = "Already bookmarked"
+      return
+    end
+    b = BookmarkStation.new
+    b.station = station
+    b.user = user
+    b.save!
+    @ret_message = "Bookmarked =)"
   end
 
   def list
