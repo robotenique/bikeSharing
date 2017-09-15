@@ -20,11 +20,11 @@ Ao integrar as funcionalidades da captura de dados com a geolocalização, esper
 
 ## Authors
 
-* **Duílio Elias** - [DuilioElias](https://github.com/duilioelias)
 * **Juliano Garcia de Oliveira** - [robotenique](https://gitlab.com/robotenique)
+* **Bruno Scholl** - [brunobbs](https://gitlab.com/brunobbs)
+* **Duílio Elias** - [DuilioElias](https://github.com/duilioelias)
 * **Claudio Silva** - [ClaudioSilva](https://gitlab.com/ddkclaudio)
 * **Caio Carmo** - [bcarmo-caio](https://gitlab.com/bcarmo-caio)
-* **Bruno Scholl** - [brunobbs](https://gitlab.com/brunobbs)
 * **Vitor Santos** - [Varyag](https://gitlab.com/Varyag)
 
 
@@ -42,51 +42,3 @@ A lista completa das dependências pode ser vista no *.gemfile* dentro da pasta.
 
 ## Versão live (heroku)
 As versões enviadas podem ser vistas no [heroku][https://immense-dawn-86994.herokuapp.com/] ! :D
-
-
-## Telas (mockup)
-
-
-
-
-
-
-
-
-
-Alguns prints das telas que pretendemos desenvolver:
-
-Página Inicial:
-
-![alt text](https://linux.ime.usp.br/~duilioelias/home.png)
-
-Menu do lado esquerdo:
-
-![alt text](https://linux.ime.usp.br/~duilioelias/leftMenu.png)
-
-Menu do lado direito:
-
-![alt text](https://linux.ime.usp.br/~duilioelias/leftMenu.png)
-
-Tela de Login:
-
-![alt text](https://linux.ime.usp.br/~duilioelias/login.png)
-
-Rank das estações mais utilizadas:
-
-![alt text](https://linux.ime.usp.br/~duilioelias/rank.png)
-
-Estatísticas de cada estação:
-
-![alt text](https://linux.ime.usp.br/~duilioelias/stats.png)
-
-Para ver todas as telas acesse: https://ninjamock.com/s/LQ98L
-
-Diagrama de classes:
-
-![alt text](https://linux.ime.usp.br/~duilioelias/CitiBikes.png)
-
-
-Para acompanhar o desenvolvimento do projeto estamos utilizando o trello:
-
-[Trello BikeSharing](https://trello.com/bikesharingsp)
